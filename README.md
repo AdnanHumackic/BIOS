@@ -3,9 +3,7 @@
 What is <b>BIOS</b>?
 <hr>
 BIOS is a web application that enables customers to browse components, compatible component elements, and make purchases of selected items.
-BIOS was made by:
-@OmarColakhodzic
-@AdnanHumackic
+
 
 Functionalities
 <hr>
@@ -21,12 +19,15 @@ The primary focus of the employee is working with components, including adding, 
 <b>All of the mentioned entities also have the capability to edit their user profile.</b>
 <hr>
 <b>Component browsing</b>
-![image](https://github.com/AdnanHumackic/BIOS/assets/117025277/21f7b0f6-73e4-400a-8a54-6fc9be438833)
+<br>
+![image](https://github.com/AdnanHumackic/BIOS/assets/117025277/82280bdb-05b4-431b-9501-f08916e2c5e0)
 
 <b>Admin panel</b>
+<br>
 ![image](https://github.com/AdnanHumackic/BIOS/assets/117025277/2ea9e6f4-ba2b-4f31-9a14-7d9eb45c0d65)
 
 <b>Employee panel</b>
+<br>
 ![image](https://github.com/AdnanHumackic/BIOS/assets/117025277/fdcf8e21-d54b-4011-903a-cff1d11ac5a8)
 
 <hr>
