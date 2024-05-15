@@ -1,0 +1,34 @@
+<body class="login-page">
+
+
+<main>
+
+  <div class="login-block">
+    <h1>Prijavite se na vaš račun</h1>
+
+    <form action="#">
+
+      <hr class="hr-xs">
+      <div class="form-floating my-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="Korisničko ime" [ngModelOptions]="{standalone: true}" [(ngModel)]="loginRequest.korisnickoIme">
+        <label for="floatingInput">Korisničko ime</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" [ngModelOptions]="{standalone: true}" [(ngModel)]="loginRequest.lozinka">
+        <label for="floatingPassword">Lozinka</label>
+      </div>
+
+      <div id="btnHolder">
+        <button class="btn  btn-danger mt-3 w-50" (click)="signIn()">Prijavi se</button>
+      </div>
+      <br>
+      <div class="login-links">
+        <p class="text-center">Niste registrovani? <a class="txt-brand" (click)="registracija()">Registruj se</a></p>
+      </div>
+    </form>
+  </div>
+
+</main>
+
+</body>
+

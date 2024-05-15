@@ -1,0 +1,165 @@
+.mat-mdc-dialog-content {
+  max-height: calc(100vh - 90px);
+}
+span{
+  font-size: larger;
+  display: block;
+  font-weight: lighter;
+}
+
+body{margin-top:20px;
+  background-color:#f2f6fc;
+  color:#69707a;
+}
+.img-account-profile {
+  height: 10rem;
+}
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.card {
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+  font-weight: 500;
+}
+.card-header:first-child {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+  background-color: rgb(220, 53, 69);
+  color:white;
+  padding: 1rem 1.35rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #69707a;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #c5ccd6;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders {
+  color: rgb(220, 53, 69);
+  border-bottom-color: rgb(220, 53, 69);
+}
+.nav-borders .nav-link {
+  color: rgb(220, 53, 69);
+  border-bottom-color: rgb(220, 53, 69);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+a:hover{
+  cursor: pointer;
+}
+
+.not_selected
+{
+  color: #c4c2c2;
+  border: none;
+}
+.selected
+{
+  color:white;
+  border:none;
+  border-bottom: solid 3px white;
+}
+.custom-card {
+  width: 100%;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-card-body {
+  padding: 15px;
+}
+
+.custom-card-title {
+  font-size: 1.25rem;
+}
+
+.custom-card-text {
+  font-size: 1rem;
+}
+
+.custom-text-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.text-center {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.dialog-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Osigurava da je dijalog iznad ostalih elemenata */
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Centriranje sadržaja */
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-dialog-actions button {
+  margin-right: 5px;
+}
+
+.mat-radio-group {
+  margin: 10px;
+}
+
+.mat-radio-button {
+  margin-right: 20px;
+}
+
+.btn {
+  color: #fff !important;
+  background-color: #dc3545; /* Crvena boja */
+  border-color: #dc3545; /* Crvena boja */
+}
+
+.btn:hover {
+  color: #fff;
+  background-color: #dc3545; /* Crvena boja */
+  border-color: #dc3545; /* Crvena boja */
+}
+.zatvori {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
+
+
+

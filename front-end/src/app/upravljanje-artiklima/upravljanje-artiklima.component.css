@@ -1,0 +1,57 @@
+.red-pagination .page-item.active .page-link,
+.red-pagination .page-item:not(.disabled) .page-link:hover,
+.red-pagination .page-item:not(.disabled) .page-link:focus {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+
+.red-pagination .page-item.active .page-link {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+
+
+.nav-borders {
+  color: rgb(220, 53, 69);
+  border-bottom-color: rgb(220, 53, 69);
+}
+.nav-borders .nav-link {
+  color: rgb(220, 53, 69);
+  border-bottom-color: rgb(220, 53, 69);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.not_selected
+{
+  color: #c4c2c2;
+  border: none;
+}
+.selected
+{
+  color:white;
+  border:none;
+  border-bottom: solid 3px white;
+}
+.card {
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+  font-weight: 500;
+}
+.card-header:first-child {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+  background-color: rgb(220, 53, 69);
+  color:white;
+  padding: 1rem 1.35rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}

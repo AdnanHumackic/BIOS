@@ -1,0 +1,57 @@
+
+.btn {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  margin-top: 0.75rem;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+.custom-card {
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-card-body {
+    padding: 15px;
+}
+
+.custom-card-title {
+    font-size: 1.25rem;
+}
+
+.custom-card-text {
+    font-size: 1rem;
+}
+
+.custom-text-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.text-center {
+    text-align: center;
+    margin-bottom: 20px;
+}

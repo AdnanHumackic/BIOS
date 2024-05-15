@@ -1,0 +1,38 @@
+a:hover{
+  cursor: pointer;
+}
+#kompEl:hover{
+  background-color: rgba(255, 0, 0, 0.06);
+}
+
+#details{
+  margin-top: 20px;
+}
+
+
+.container-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+span{
+  font-size: larger;
+  display: block;
+  font-weight: lighter;
+}
+#sivo{
+  color: rgb(128, 128, 128);
+}
+.red-pagination .page-item.active .page-link,
+.red-pagination .page-item:not(.disabled) .page-link:hover,
+.red-pagination .page-item:not(.disabled) .page-link:focus {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+
+.red-pagination .page-item.active .page-link {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}

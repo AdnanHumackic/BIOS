@@ -1,0 +1,42 @@
+#opis{
+  white-space: pre-wrap;
+}
+.line {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.card-body{
+  background-color: rgba(128, 128, 128, 0.05);
+}
+.card{
+  transition: background-color .6s ease, transform .6s;
+  cursor: pointer;
+}
+.card:hover{
+  transform: scale(1.1);
+  border: 1px solid rgb(220, 53, 69);
+}
+#line{
+  background-color: rgb(220, 53, 69);
+  height: 20px;
+  margin-top: 15px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+}
+.red-pagination .page-item.active .page-link,
+.red-pagination .page-item:not(.disabled) .page-link:hover,
+.red-pagination .page-item:not(.disabled) .page-link:focus {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+
+.red-pagination .page-item.active .page-link {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}

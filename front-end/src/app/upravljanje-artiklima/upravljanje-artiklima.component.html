@@ -1,0 +1,440 @@
+<div class="container-xl px-4" style="margin-top: 15px;">
+
+  <nav class="nav nav-borders justify-content-center">
+    <button (click)="prikaziRadSaArtiklima($event)" class="navbarButton selected nav-link active ms-0">Rad sa artiklima
+    </button>
+    <button (click)="prikaziObrisane($event)" class="navbarButton not_selected nav-link">Obrisani artikli
+    </button>
+    <button (click)="prikaziMojeZadatke($event)" class="navbarButton not_selected nav-link">Moji zadaci
+    </button>
+    <button (click)="prikaziAktivneNarudzbe($event)" class="navbarButton not_selected nav-link">Aktivne narudžbe
+    </button>
+    <button (click)="prikaziDokumenti($event)" class="navbarButton not_selected nav-link">Prikazi dokumente
+    </button>
+  </nav>
+  <hr class="mt-0 mb-4">
+
+
+  <div *ngIf="prikaziArtikliZadaci.neobrisani">
+    <section *ngIf="myAuth.isLogiran() && myAuth.isRadnik()" class="col-xl-8 mx-auto" style="width: 100%">
+      <div class="card mb-4">
+        <div class="card-header">Rad sa artiklima</div>
+
+        <button (click)="otvoriDodavanje()" type="button" class="btn btn-danger btn-md d-block mx-auto mt-3">Dodaj novi
+          artikal
+        </button>
+
+        <div class="container py-5">
+          <div class="row justify-content-center mb-3" *ngFor="let neobrisani of art">
+            <div class="col-md-12 col-xl-10">
+              <div class="card shadow-0 border rounded-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                      <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                        <img src="{{MojConfig.server_adresa}}/ArtikalSlikaPreview/Slika?id={{neobrisani.id}}&timestamp={{refreshTimestamp}}"
+                             class="w-100"/>
+                        <a href="#!">
+                          <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                      <div class="d-flex flex-row">
+                        <div class="text-danger mb-1 me-2">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <span>{{neobrisani.naziv}}</span>
+                      </div>
+                      <div class="mt-1 mb-0 text-muted small">
+                        <span>{{neobrisani.opis}}</span>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                      <div class="d-flex flex-row align-items-center mb-1">
+                        <h4 class="mb-1 me-1">{{neobrisani.cijena}} KM</h4>
+                      </div>
+                      <div class="d-flex flex-column mt-4">
+                        <button type="button" class="btn btn-danger flex-fill ms-1 mb-1 bi bi-pen"
+                                (click)="otvoriDijalog(neobrisani.id)" data-mdb-ripple-color="dark"></button>
+                        <button type="button" class="btn btn-danger flex-fill ms-1 mb-1 bi bi-trash"
+                                (click)="obrisiArtikal(neobrisani)" data-mdb-ripple-color="dark"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="totalPages > 1" class="text-center mt-3 mb-3 red-pagination">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mx-auto">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="goToPage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+          <li class="page-item" *ngFor="let page of getPagesArray()" [class.active]="page === currentPage">
+            <button class="page-link" (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="goToPage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="prikaziArtikliZadaci.obrisani">
+
+  <section *ngIf="myAuth.isLogiran() && myAuth.isRadnik()" class="col-xl-8 mx-auto">
+    <div class="card mb-4">
+      <div class="card-header">Obrisani artikli</div>
+      <div class="container py-5">
+        <div *ngIf="obrisani.length <= 0" class="text-center" style="color:rgb(220, 53, 69);">
+          <p>Nema obrisanih artikala!</p>
+        </div>
+        <div class="row justify-content-center mb-3" *ngFor="let artikal of obrisani">
+          <div class="col-md-12 col-xl-10">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                      <img src="{{MojConfig.server_adresa}}/ArtikalSlikaPreview/Slika?id={{artikal.id}}"
+                           class="w-100"/>
+                      <a href="#!">
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-flex flex-row">
+                      <div class="text-danger mb-1 me-2">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                      <span>{{artikal.naziv}}</span>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <span>{{artikal.opis}}</span>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                    <div class="d-flex flex-row align-items-center mb-1">
+                      <h4 class="mb-1 me-1">{{artikal.cijena}} KM</h4>
+                    </div>
+
+                    <div class="d-flex flex-column mt-4">
+                      <button type="button" class="btn btn-danger flex-fill ms-1 mb-1 bi-bootstrap-reboot"
+                              (click)="vrati(artikal.id)" data-mdb-ripple-color="dark"></button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="totalPagesObrisani > 1" class="text-center mt-3 mb-3 red-pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mx-auto">
+        <li class="page-item" [class.disabled]="currentPageObrisani === 1">
+          <button class="page-link" (click)="goToPageObrisani(currentPageObrisani - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of getPagesArrayObrisani()"
+            [class.active]="page === currentPageObrisani">
+          <button class="page-link" (click)="goToPageObrisani(page)">
+            {{ page }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPageObrisani === totalPagesObrisani">
+          <button class="page-link" (click)="goToPageObrisani(currentPageObrisani + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+</div>
+
+<div *ngIf="prikaziArtikliZadaci.mojiZadaci">
+
+  <section *ngIf="myAuth.isLogiran() && myAuth.isRadnik()" class="col-xl-8 mx-auto">
+    <div class="card mb-4">
+      <div class="card-header">Moji zadaci</div>
+      <div class="container py-5">
+        <div *ngIf="zad.length <= 0" class="text-center" style="color:rgb(220, 53, 69);">
+          <p>Trenutno nemate aktivnih zadataka!</p>
+        </div>
+        <div *ngFor="let zadatak of zad" class="row justify-content-center mb-3">
+          <div class="col-md-12 col-xl-10">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                      <img
+                        src="./assets/task.jpg"
+                        class="w-50"/>
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-flex flex-row">
+                      <div class="text-danger mb-1 me-2">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                      <span>{{ zadatak.naziv }}</span>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <span>Opis: {{ zadatak.opis }}</span>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <span>Datum dodavanja: {{ zadatak.datumDodavanja | date: 'dd.MM.yyyy.' }}</span>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <span>Datum završetka: {{ zadatak.datumZavrsetka | date: 'dd.MM.yyyy.' }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                    <div class="d-flex flex-row align-items-center mb-1">
+
+                    </div>
+                    <div class="d-flex flex-column mt-4">
+                      <button type="button" class="btn btn-danger flex-fill ms-1 mb-1 bi bi-check"
+                              (click)="Obrisi(zadatak.id)" data-mdb-ripple-color="dark"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="ukupnoStranica > 1" class="text-center mt-3 mb-3 red-pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mx-auto">
+        <li class="page-item" [class.disabled]="trenutnaStranica === 1">
+          <button class="page-link" (click)="idiNaStranicu(trenutnaStranica - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of nizStranica()" [class.active]="page === trenutnaStranica">
+          <button class="page-link" (click)="idiNaStranicu(page)">
+            {{ page }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="trenutnaStranica === ukupnoStranica">
+          <button class="page-link" (click)="idiNaStranicu(trenutnaStranica + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</div>
+
+
+
+<div *ngIf="prikaziArtikliZadaci.aktivneNarudzbe">
+
+  <section *ngIf="myAuth.isLogiran() && myAuth.isRadnik()" class="col-xl-8 mx-auto">
+    <div class="card mb-4">
+      <div class="card-header">Rad sa artiklima</div>
+        <div class="container py-5">
+          <div *ngIf="narudzbe.length <= 0" class="text-center" style="color:rgb(220, 53, 69);">
+            <p>Nažalost, nema aktivnih narudžbi!</p>
+          </div>
+        <div *ngFor="let item of narudzbe" class="row justify-content-center mb-3">
+
+          <div class="col-md-12 col-xl-12">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                      <img
+                        src="/assets/basket.png"
+                        class="w-50"/>
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="d-flex flex-row">
+                      <div class="text-danger mb-1 me-2">
+                        <i class="fa fa-star">Podaci o narudzbi</i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <label>Ime primaoca: {{ item.ime }}</label>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <label>Prezime: {{ item.prezime }}</label>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <label>Adresa: {{ item.adresa }}</label>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <label>Kontakt: {{ item.brojTelefona }}</label>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <label>Dostavljač: {{ item.dostavljac }}</label>
+                    </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <label>Cijena: {{ item.ukupnaCijena }} KM</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                    <div class="d-flex flex-row align-items-center mb-1">
+                    </div>
+                    <div class="d-flex flex-column mt-4">
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="totalPagesNarudzbe > 1" class="text-center mt-3 mb-3 red-pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mx-auto">
+        <li class="page-item" [class.disabled]="currentPageNarudzbe === 1">
+          <button class="page-link" (click)="goToPageNarudzbe(currentPageNarudzbe - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of getPagesArrayNarudzbe()"
+            [class.active]="page === currentPageNarudzbe">
+          <button class="page-link" (click)="goToPageNarudzbe(page)">
+            {{ page }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPageNarudzbe === totalPagesNarudzbe">
+          <button class="page-link" (click)="goToPageNarudzbe(currentPageNarudzbe + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+
+</div>
+
+
+<div *ngIf="prikaziArtikliZadaci.dokumenti">
+
+  <section *ngIf="myAuth.isLogiran() && myAuth.isRadnik()" class="col-xl-8 mx-auto">
+    <div class="card mb-4">
+      <div class="card-header">Dostupni dokumenti</div>
+      <div class="container py-5">
+        <div *ngIf="dokumenti.length <= 0" class="text-center" style="color:rgb(220, 53, 69);">
+          <p>Nažalost, nema dostupnih dokumenata!</p>
+        </div>
+        <div *ngFor="let item of dokumenti" class="row justify-content-center mb-3">
+
+          <div class="col-md-12 col-xl-12">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="mt-1 mb-0 text-muted small">
+                      <a [href]="item.fileUrl" target="_blank">Naziv dokumenta: {{ item.naziv }}</a>
+                    </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="totalPagesDokumenti > 1" class="text-center mt-3 mb-3 red-pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mx-auto">
+        <li class="page-item" [class.disabled]="currentPageDokumenti === 1">
+          <button class="page-link" (click)="goToPageNarudzbe(currentPageDokumenti - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of getPagesArrayDokumenti()"
+            [class.active]="page === currentPageDokumenti">
+          <button class="page-link" (click)="goToPageDokumenti(page)">
+            {{ page }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPageDokumenti === totalPagesDokumenti">
+          <button class="page-link" (click)="goToPageDokumenti(currentPageDokumenti + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+
+</div>
+

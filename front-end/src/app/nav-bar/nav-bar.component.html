@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-danger bg-danger">
+  <div class="container-fluid">
+    <a class="navbar-brand bi bi-pc-display text-white" routerLink="/oNama">
+      <h1>BIOS</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item active">
+          <a class="nav-link text-white" routerLink="/pregledKomp">Pregled komponenti</a>
+        </li>
+
+
+        <li class="nav-item active">
+          <a class="nav-link text-white" routerLink="/wishlist"
+             *ngIf="myAuthService.isLogiran() && myAuthService.isKupac()">Wishlist</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/korpa"
+             *ngIf="myAuthService.isLogiran() && myAuthService.isKupac()">
+            <i class="bi bi-cart"></i>
+          </a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link text-white" routerLink="/narudzba"
+             *ngIf="myAuthService.isLogiran() && myAuthService.isKupac()">Narudzbe</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link text-white" routerLink="/upravljanjeArtiklima"
+             *ngIf="myAuthService.isLogiran() && myAuthService.isRadnik()">Akcije</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link text-white" routerLink="/adminAkcije"
+             *ngIf="myAuthService.isLogiran() && myAuthService.isAdmin()">Akcije</a>
+        </li>
+
+
+      </ul>
+
+      <div class="ms-auto">
+
+        <a class="btn btn-danger" routerLink="/login" *ngIf="!myAuthService.isLogiran() ">Prijava</a>
+
+        <li class="nav-item dropdown" *ngIf="myAuthService.isLogiran()" id="dot">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown2" role="button"
+             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="img-account-profile rounded-circle"
+                 src="{{MojConfig.server_adresa}}/Kupac/Slika?id={{myAuthService.getAuthorizationToken()?.korisnickiNalogID}}&timestamp={{refreshTimestamp}}"
+                 alt="" style="max-width: 40px; max-height: 40px;">
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown2"
+               *ngIf="myAuthService.isLogiran()">
+            <a class="dropdown-item" (click)="otvoriDijalog()" id="upd" *ngIf="myAuthService.isKupac()">Uredi korisnički
+              profil</a>
+            <a class="dropdown-item" (click)="dodavanjeDijalog()" id="add" *ngIf="myAuthService.isAdmin()">Uredi
+              korisnički profil</a>
+            <a class="dropdown-item" (click)="promijeniLozinkuDijalog()" id="edit" *ngIf="myAuthService.isRadnik()">Uredi
+              korisnički profil</a>
+
+            <a class="dropdown-item" routerLink="/obrisaniArtikli" *ngIf="myAuthService.isLogiran()" (click)="logout()">Odjavi
+              se</a>
+          </div>
+        </li>
+
+      </div>
+
+    </div>
+
+  </div>
+</nav>
+<div>
+  <router-outlet></router-outlet>
+</div>
+</body>
+</html>

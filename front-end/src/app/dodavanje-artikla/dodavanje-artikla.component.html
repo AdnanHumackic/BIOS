@@ -1,0 +1,192 @@
+<mat-dialog-content>
+  <button mat-icon-button style="float:right; margin:5px" matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="container-xl px-4 mt-4">
+    <nav class="nav nav-borders">
+      <button id="osnovneButton" class="navbarButton selected nav-link active ms-0">Dodavanje osnovnih informacija
+        artikla
+      </button>
+      <button id="slikeButton" class="navbarButton not_selected nav-link">Dodavanje slika
+      </button>
+      <button id="kompatibilniButton" class="navbarButton not_selected nav-link">Dodavanje kompatibilnih elemenata</button>
+
+    </nav>
+    <hr class="mt-0 mb-4">
+
+    <div class="row">
+
+      <div class="col-xl-8 mx-auto" *ngIf="prikaz.prikaziDodavanjeDetalja" style="width:100%;">
+        <div class="content-container">
+
+        </div>
+        <div class="card mb-4">
+          <div class="card-header">Detalji artikla
+
+          </div>
+          <div class="card-body" (load)="getAll()">
+            <form [formGroup]="dodavanjeArtikla" (ngSubmit)="dodajArtikal()">
+
+
+              <div class="mb-3 form-group">
+                <label class="small mb-1" for="imeArtikla">Naziv artikla:</label>
+                <input id="imeArtikla" type="text" placeholder="Unesite naziv artikla"
+                       class="form-control"
+                       formControlName="imeArtikla">
+
+                <span
+                  *ngIf="dodavanjeArtikla.get('imeArtikla')?.hasError('required') && dodavanjeArtikla.get('imeArtikla')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+              Naziv artikla je obavezno polje.
+              </span>
+
+                <span
+                  *ngIf="dodavanjeArtikla.get('imeArtikla')?.hasError('pattern') && dodavanjeArtikla.get('imeArtikla')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                Naziv artikla može početi brojem ili velikim slovom.
+                </span>
+
+                <span
+                  *ngIf="dodavanjeArtikla.get('imeArtikla')?.hasError('artikalPostoji') && dodavanjeArtikla.get('imeArtikla')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                  Artikal sa ovim imenom već postoji.
+                </span>
+
+              </div>
+
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6 form-group">
+                  <label class="small mb-1" for="cijena">Cijena:</label>
+                  <input class="form-control" id="cijena" type="number" placeholder="Unesite cijenu"
+                         formControlName="cijena">
+                  <span
+                    *ngIf="dodavanjeArtikla.get('cijena')?.hasError('cijenaInvalid') && dodavanjeArtikla.get('cijena')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">
+                    Cijena artikla ne može biti 0, manja od 0, ili jednaka 0.
+                  </span>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small mb-1" for="tipID">Tip artikla:</label>
+                    <select id="tipID" class="form-control" formControlName="tipID" name="tipID">
+                      <option [value]="tip.id" *ngFor="let tip of tip">
+                        {{tip.tipArtikla}}
+                      </option>
+                    </select>
+                    <span
+                      *ngIf="dodavanjeArtikla.get('tipID')?.hasError('required') && dodavanjeArtikla.get('tipID')?.touched"
+                      class="text-danger bi bi-exclamation-triangle">
+                      Odabir tipa artikla je obavezno polje.
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="row gx-3 mb-3">
+
+                <div class="col-md-6 form-group">
+                  <label class="small mb-1" for="proizvodjac">Proizvođač:</label>
+                  <input class="form-control" id="proizvodjac" type="text" placeholder="Unesite proizvođača"
+                         formControlName="proizvodjac">
+
+                  <span
+                    *ngIf="dodavanjeArtikla.get('proizvodjac')?.hasError('required') && dodavanjeArtikla.get('proizvodjac')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">
+                      Proizvođač je obavezno polje.
+                    </span>
+                  <span
+                    *ngIf="dodavanjeArtikla.get('proizvodjac')?.hasError('pattern') && dodavanjeArtikla.get('proizvodjac')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">
+                      Naziv proizvođača mora počinjati velikim slovom.
+                    </span>
+                </div>
+              </div>
+              <div class="mb-3 form-group">
+                <label class="small mb-1" for="opis">Opis</label>
+                <textarea id="opis" type="text"
+                          placeholder="Unesite opis" class="form-control"
+                          formControlName="opis"></textarea>
+                <span
+                  *ngIf="dodavanjeArtikla.get('opis')?.hasError('required') && dodavanjeArtikla.get('opis')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                      Opis je obavezno polje.
+                    </span>
+              </div>
+              <button class="btn btn-danger" type="submit" style="float:right;">Dodaj artikal</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-xl-8 mx-auto" *ngIf="prikaz.prikaziDodavanjeSlika" style="width:100%;">
+        <div class="card mb-4">
+          <div class="card-header">Dodavanje slika za artikal</div>
+          <div class="card-body">
+            <form>
+
+              <label>Odaberi slike</label>
+              <input id="slika-input" type="file" class="form-control" accept="image/*" multiple
+                     (change)="generisi_preview($event); getZadnjeKreirani()">
+              <div class="row mt-3">
+                <div *ngFor="let slika of slikePreview" class="col-md-4 mb-3">
+                  <img style="max-width: 100%; height: 200px" [src]="slika" class="img-fluid">
+                </div>
+              </div>
+              <button type="button" class="btn btn-danger btn-md d-block mx-auto mt-3" (click)="dodavanjeSlike()" style="float:right;">Dodaj
+                Slike
+              </button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-xl-8 mx-auto" *ngIf="prikaz.prikaziDodavanjeKompatibilnih" style="width:100%;">
+        <div class="card mb-4">
+          <div class="card-header">Dodavanje kompatibilnih elemenata</div>
+          <div class="card-body">
+
+            <form [formGroup]="kompatibilnostForma" (ngSubmit)="dodajKompatibilne()" (click)="getSveKompatibilnost()">
+              <label for="artikal2">Odaberite kompatibilne artile za {{this.zadnjeKreirani.ime}}:</label>
+              <select id="artikal2" class="form-control" formControlName="artikal2">
+                <option [value]="artikal.id" *ngFor="let artikal of dohvatanjeArt.slice(0,-1)">
+                  {{artikal.naziv}}
+                </option>
+              </select>
+              <span *ngIf="kompatibilnostForma.get('artikal2')?.hasError('kompatibilnostPostoji')"
+                    class="text-danger bi bi-exclamation-triangle">
+                Odabrani kompatibilni element već postoji.
+              </span>
+
+              <span *ngIf="kompatibilnostForma.get('artikal2')?.hasError('required') && kompatibilnostForma.get('artikal2')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">Potrebno je odabrati artikal.
+              </span>
+              <mat-dialog-actions align="end">
+
+                <div class="d-flex justify-content-center align-items-center">
+                  <button type="submit" class="btn btn-danger flex-fill ms-1 mb-1"
+                          (click)="getSveKompatibilnost();getZadnjeKreirani()">Sačuvaj
+                  </button>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                  <button type="submit" class="btn btn-danger flex-fill ms-1 mb-1"
+                          (click)="zavrsi()">Završi
+                  </button>
+                </div>
+              </mat-dialog-actions>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</mat-dialog-content>

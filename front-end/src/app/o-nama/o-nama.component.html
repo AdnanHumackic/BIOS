@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<section class="py-5 py-md-5 py-xl-8">
+  <div class="container">
+    <div class="row gy-4 gy-md-5 gy-lg-0 align-items-lg-center">
+
+      <div class="col-12 col-lg-6 col-xl-7">
+        <div class="row justify-content-xl-center">
+          <div class="col-12 col-xl-11">
+            <h2 class="h1 mb-4">Ko smo mi?</h2>
+            <p class="lead fs-4 text-secondary mb-4">Dobrodošli u BIOS, vašu destinaciju za vrhunsku računarsku
+              opremu! U srcu našeg poslovanja je strast prema tehnologiji, i posvećeni smo pružanju najnovijih i
+              najpouzdanijih proizvoda kako bi vaše računarsko iskustvo bilo nezaboravno.</p>
+            <p class="mb-4">Uz najpoznatije brendove u industriji, obezbeđujemo visokokvalitetne proizvode koji se
+              ističu po performansama, pouzdanosti i dugotrajnosti. Naš tim stručnjaka je tu da pruži podršku i
+              savijete, pomažući vam da pronađete savršen proizvod koji odgovara vašim potrebama.</p>
+            <div class="row gy-4 gy-md-0 gx-xxl-5X">
+              <div class="col-12 col-md-6">
+                <div class="d-flex">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center" style="margin-left: auto; margin-right: auto;" *ngIf="!myAuth.isLogiran()">
+          <div id="btnHolder" class="text-center" style="margin-left: auto; margin-right: auto;">
+            <label>Ukoliko nemate korisnički račun, klikom na dugme "Registruj se" ga možete keirati,
+              a ukoliko imate već kreiran račun, klikom na dugme "Prijavi se" mu možete pristupiti!
+            </label>
+            <br>
+            <button class="btn btn-danger mt-3" style="margin-right: 10px;" routerLink="/registracija">Registruj se</button>
+            <button class="btn btn-danger mt-3" routerLink="/login">Prijavi se</button>
+          </div>
+        </div>
+      </div>
+      <div class="image-content col-lg-6 col-xl-5">
+        <img src="./assets/oNama.jpg" alt="Slika" class="img-fluid">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

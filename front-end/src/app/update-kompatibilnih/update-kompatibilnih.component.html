@@ -1,0 +1,30 @@
+<mat-dialog-content>
+
+
+  <form class="form-group" [formGroup]="kompatibilnostUpdate" (ngSubmit)="kreirajKompatibilnost()"
+        (click)="getSveKompatibilnost()">
+    <label for="artikal2">Dodavanje kompatibilnih elemenata: </label>
+    <select id="artikal2" class="form-control" name="artikal2" formControlName="artikal2">
+      <option [value]="artikal.id" *ngFor="let artikal of artikli ">
+        {{artikal.naziv}}
+      </option>
+    </select>
+    <span *ngIf="kompatibilnostUpdate.get('artikal2')?.hasError('kompatibilnostPostoji')"
+          class="text-danger bi bi-exclamation-triangle">
+                Odabrani kompatibilni element već postoji.
+              </span>
+    <mat-dialog-actions align="end">
+
+      <div class="d-flex justify-content-center align-items-center">
+        <button type="submit" class="btn btn-danger flex-fill ms-1 mb-1" (click)="getSveKompatibilnost()">Sačuvaj
+        </button>
+      </div>
+
+    </mat-dialog-actions>
+
+  </form>
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="submit" class="btn btn-danger flex-fill ms-1 mb-1" (click)="refresh()">Završi</button>
+  </div>
+</mat-dialog-content>
+

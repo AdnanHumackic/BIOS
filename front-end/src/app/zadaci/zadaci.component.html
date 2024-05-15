@@ -1,0 +1,76 @@
+<div class="container mt-5">
+  <div class="row" >
+
+    <div class="col-md-6">
+      <div class="login-block formContainer" *ngIf="myAuth.isAdmin()">
+        <h1 class="text-center">Dodaj zadatak</h1>
+
+        <form [formGroup]="zadaciForm" *ngIf="myAuth.isAdmin()" (ngSubmit)="Dodaj()">
+          <hr class="hr-xs">
+          <div class="form-floating my-3">
+            <input type="text" class="form-control" id="floatingUsername" name="naziv" placeholder="naziv" formControlName="naziv" [(ngModel)]="zadaciRequest.naziv">
+            <label for="floatingUsername">Naziv</label>
+          </div>
+          <div class="form-floating my-3">
+            <input type="text" class="form-control" id="floatingName" name="opis" placeholder="opis" formControlName="opis" [(ngModel)]="zadaciRequest.opis">
+            <label for="floatingName">Opis</label>
+          </div>
+          <div class="form-floating my-3">
+            <input type="date" class="form-control" id="datumPocetka" name="datumPocetka" placeholder="Datum pocetka" formControlName="datumPocetka" [(ngModel)]="zadaciRequest.datumPocetka">
+            <label for="datumPocetka">Datum pocetka</label>
+          </div>
+          <div class="form-floating my-3">
+            <input type="date" class="form-control" id="datumZavrsetka" name="datumZavrsetka" placeholder="Datum zavrsetka" formControlName="datumZavrsetka" [(ngModel)]="zadaciRequest.datumZavrsetka">
+            <label for="datumZavrsetka">Datum zavrsetka</label>
+          </div>
+          <div class="form-floating my-3">
+            <select class="form-control" id="radnikId" name="radnikId" formControlName="radnikId" [(ngModel)]="zadaciRequest.radnikId">
+              <option *ngFor="let rad of radnik" [ngValue]="rad.id">{{ rad.korisnickoIme }}</option>
+            </select>
+            <label for="radnikId">Radnik</label>
+          </div>
+
+          <div id="btnHolder" class="text-center">
+            <button class="btn btn-danger mt-3 w-50" type="submit">Dodaj</button>
+          </div>
+          <br>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="col-md-6" *ngIf="myAuth.isAdmin()">
+      <h2>Aktivni zadaci</h2>
+      <div *ngIf="myAuth.isAdmin()">
+        <div *ngFor="let zadatak of zadaci" class="mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ zadatak.naziv }}</h5>
+              <p class="card-text">Opis: {{ zadatak.opis }}</p>
+              <p class="card-text">Datum dodavanja: {{ zadatak.datumDodavanja }}</p>
+              <p class="card-text">Datum završetka: {{ zadatak.datumZavrsetka }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12" *ngIf="myAuth.isRadnik()">
+      <h2 class="text-center">Moji zadaci</h2>
+      <div *ngIf="myAuth.isRadnik()">
+        <div *ngFor="let zadatak of zadaci" class="mb-3">
+          <div class="custom-card">
+            <div class="custom-card-body">
+              <h5 class="custom-card-title">{{ zadatak.naziv }}</h5>
+              <p class="custom-card-text">Opis: {{ zadatak.opis }}</p>
+              <p class="custom-card-text">Datum dodavanja: {{ zadatak.datumDodavanja }}</p>
+              <p class="custom-card-text">Datum završetka: {{ zadatak.datumZavrsetka }}</p>
+              <div class="custom-text-end">
+                <button class="btn btn-danger" (click)="Obrisi(zadatak.id)">Uradjen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

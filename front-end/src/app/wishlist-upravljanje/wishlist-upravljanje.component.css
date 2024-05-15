@@ -1,0 +1,44 @@
+/* wishlist.component.css */
+
+.wishlist-item {
+  display: flex;
+  border: 1px solid red;
+  margin: 10px;
+  padding: 10px;
+}
+
+.wishlist-item img {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-ime {
+  font-weight: bold;
+}
+
+.item-cijena {
+  color: green;
+}
+.container {
+  text-align: center;
+}
+.red-pagination .page-item.active .page-link,
+.red-pagination .page-item:not(.disabled) .page-link:hover,
+.red-pagination .page-item:not(.disabled) .page-link:focus {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+
+.red-pagination .page-item.active .page-link {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+

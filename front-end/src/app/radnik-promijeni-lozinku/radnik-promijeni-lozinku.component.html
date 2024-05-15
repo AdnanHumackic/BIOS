@@ -1,0 +1,123 @@
+<mat-dialog-content>
+  <button mat-icon-button style="float:right; margin:5px" matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+
+
+  <div class="container-xl px-4 mt-4">
+    <nav class="nav nav-borders">
+      <button class="navbarButton selected nav-link active ms-0">Promjena
+        lozinke
+      </button>
+
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="card mb-4 mb-xl-0">
+          <div class="card-header">Slika profila</div>
+          <div class="card-body text-center">
+            <img class="img-account-profile rounded-circle mb-2" *ngIf="!this.lozinkaGet?.slikaRadnika"
+                 src="{{MojConfig.server_adresa}}/KorisnickiNalog/Slika?id={{myAuth.getAuthorizationToken()?.korisnickiNalogID}}"
+                 alt="">
+            <img class="img-account-profile rounded-circle mb-2" src="{{this.lozinkaGet?.slikaRadnika}}">
+            <div class="small font-italic text-muted mb-4">Maksimalna velčina slike je 300KB!</div>
+
+            <div class="mb-3 form-group" *ngIf="loznkaEdit!=null" [formGroup]="loznkaEdit">
+              <label for="slika-input">Nova slika</label>
+              <input id="slika-input" type="file" accept="image/*" (change)="generisiPreview()" class="form-control"
+                     formControlName="slikaRadnika">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8">
+        <div class="card mb-4">
+          <div class="card-header">Promjena lozinke</div>
+          <div class="card card-body" id="sif">
+            <form class="form-group rounded p-4" [formGroup]="loznkaEdit" (ngSubmit)="editLozinka()"
+                  (load)="this.dohvatiLozinku()">
+
+              <input formControlName="loz" class="form-control" id="test">
+
+              <div class="form-group" *ngIf="lozinkaGet!=null">
+                <label class="small mb-1">Stara lozinka:</label>
+                <input type="password" class="form-control" id="staraLoz" placeholder="Stara lozinka"
+                       formControlName="staraLoz">
+
+                <span *ngIf="loznkaEdit.get('staraLoz')?.hasError('required') && loznkaEdit.get('staraLoz')?.touched"
+                      class="text-danger bi bi-exclamation-triangle">
+                    Molimo unesite staru lozinku!
+                  </span>
+
+                <span class="text-danger bi bi-exclamation-triangle"
+                      *ngIf="loznkaEdit.get('staraLoz')?.hasError('areEqual') && loznkaEdit?.touched">
+                    Stara lozinka mora biti jednaka trenutnoj lozinci.
+                   </span>
+
+
+              </div>
+
+              <div class="row gx-3 mb-3">
+                <div class="form-group col-md-6" *ngIf="loznkaEdit != null">
+                  <label class="small mb-1">Nova lozinka:</label>
+                  <input type="password" class="form-control" id="novaLoz" placeholder="Nova lozinka"
+                         formControlName="novaLoz">
+
+                  <span *ngIf="loznkaEdit.get('novaLoz')?.hasError('required') && loznkaEdit.get('novaLoz')?.touched"
+                        class="text-danger bi bi-exclamation-triangle">
+                    Ukoliko mijenjate lozinku, ovo polje ne smije biti prazno!
+                  </span>
+
+                  <span *ngIf="loznkaEdit.get('novaLoz')?.hasError('minlength') && loznkaEdit.get('novaLoz')?.touched"
+                        class="text-danger bi bi-exclamation-triangle">
+                     Nova lozinka mora sadržavati najmanje 4 karaktera!
+                  </span>
+
+                  <span class="text-danger bi bi-exclamation-triangle"
+                        *ngIf="loznkaEdit.get('novaLoz')?.hasError('areNotEqual')">
+                    Nova lozinka ne smije biti jednaka trenutnoj lozinci.
+                 </span>
+                </div>
+
+                <input type="text" class="form-control" id="id"
+                       formControlName="id">
+
+
+                <div class="form-group col-md-6" *ngIf="loznkaEdit != null">
+                  <label class="small mb-1">Potvrda nove lozinke:</label>
+                  <input type="password" class="form-control" id="lozinka" placeholder="Potvrda nove lozinke"
+                         formControlName="lozinka">
+
+                  <span *ngIf="loznkaEdit.get('lozinka')?.hasError('required') && loznkaEdit.get('lozinka')?.touched"
+                        class="text-danger bi bi-exclamation-triangle">
+                    Ukoliko mijenjate lozinku, ovo polje ne smije biti prazno!
+                  </span>
+
+                  <span *ngIf="loznkaEdit.get('lozinka')?.hasError('minlength') && loznkaEdit.get('lozinka')?.touched"
+                        class="text-danger bi bi-exclamation-triangle">
+                    Nova lozinka mora sadržavati najmanje 4 karaktera!
+                  </span>
+
+                  <span class="text-danger bi bi-exclamation-triangle"
+                        *ngIf="loznkaEdit.get('lozinka')?.hasError('areEqual')">
+                    Nova lozinka i potvrda nove lozinke moraju biti jednake.
+                  </span>
+
+                </div>
+              </div>
+
+
+              <button type="submit" class="btn btn-danger" id="lozBtn" *ngIf="lozinkaGet != null"
+                      (click)="editLozinka()">
+                Završi editovanje lozinke
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</mat-dialog-content>

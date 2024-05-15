@@ -1,0 +1,381 @@
+<div class="container-xl px-4 mt-4">
+  <nav class="nav nav-borders">
+    <button (click)="prikaziDodavanjeRadnika($event)" class="navbarButton selected nav-link active ms-0">Dodavanje
+      radnika
+    </button>
+    <button (click)="prikaziEditovanjeProfila($event)" class="navbarButton not_selected nav-link">Editovanje profila
+    </button>
+    <button (click)="prikaziUpravljanjeKorisnickim($event)" class="navbarButton not_selected nav-link">Upravljanje
+      zadacima
+    </button>
+    <button (click)="prikaziAktivneZadatke($event)" class="navbarButton not_selected nav-link">Aktivni
+      zadaci
+    </button>
+    <button (click)="prikaziDodavanjeDokumenata($event)" class="navbarButton not_selected nav-link">Dodavanje
+      dokumenata za radnike
+    </button>
+  </nav>
+  <hr class="mt-0 mb-4">
+  <div class="row">
+    <div class="col-xl-8 mx-auto" *ngIf="prikaz.dodavanjeRadnika" style="width: 100%">
+      <div class="card mb-4">
+        <div class="card-header">Dodavanje radnika</div>
+        <div class="card-body">
+
+          <form [formGroup]="dodavanjeRadnika" (ngSubmit)="dodajRadnika()">
+
+            <div class="mb-3 form-group">
+
+              <label class="small mb-1" for="korisnickoIme">Korisničko ime:</label>
+              <input type="text" class="form-control" id="korisnickoIme" placeholder="Korisničko ime"
+                     formControlName="korisnickoIme">
+              <span id="zaIme"
+                    *ngIf="dodavanjeRadnika.get('korisnickoIme')?.hasError('required') && dodavanjeRadnika.get('korisnickoIme')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">
+              Korisničko ime je obavezno, te molimo da se sastoji od minimalno 5 karaktera!
+              </span>
+
+              <label class="small mb-1" for="lozinka">Lozinka:</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="lozinka" placeholder="Lozinka"
+                       formControlName="lozinka" style="width: 60%;">
+                <button type="button" class="btn btn-danger ml-2" (click)="generisiLozinku()">Generiši šifru</button>
+                <span
+                  *ngIf="dodavanjeRadnika.get('lozinka')?.hasError('required') && dodavanjeRadnika.get('lozinka')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                    Molimo da generišete lozinku!
+                    </span>
+              </div>
+
+
+            </div>
+            <div class="row gx-3 mb-3">
+              <div class="form-group col-md-6">
+
+                <label class="small mb-1" for="ime">Ime:</label>
+                <input type="text" class="form-control" id="ime" placeholder="Ime" formControlName="ime">
+                <span
+                  *ngIf="dodavanjeRadnika.get('ime')?.hasError('required') && dodavanjeRadnika.get('ime')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                  Ime je obavezno!
+                  </span>
+                <span *ngIf="dodavanjeRadnika.get('ime')?.hasError('pattern') && dodavanjeRadnika.get('ime')?.touched"
+                      class="text-danger bi bi-exclamation-triangle">
+                  Ime mora počinjati velikim slovom i sadržavati samo slova!
+                  </span>
+              </div>
+
+              <div class="form-group col-md-6">
+
+                <label class="small mb-1" for="prezime">Prezime:</label>
+                <input type="text" class="form-control" id="prezime" placeholder="Prezime" formControlName="prezime">
+                <span
+                  *ngIf="dodavanjeRadnika.get('prezime')?.hasError('required') && dodavanjeRadnika.get('prezime')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                Prezime je obavezno!
+                </span>
+                <span
+                  *ngIf="dodavanjeRadnika.get('prezime')?.hasError('pattern') && dodavanjeRadnika.get('prezime')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                Prezime mora počinjati velikim slovom i sadržavati samo slova!
+                </span>
+              </div>
+
+            </div>
+
+            <div class="mb-3 form-group">
+              <label class="small mb-1" for="email">Email:</label>
+              <input type="text" class="form-control" id="email" placeholder="Email"
+                     formControlName="email">
+              <span
+                *ngIf="dodavanjeRadnika.get('email')?.hasError('required') && dodavanjeRadnika.get('email')?.touched"
+                class="text-danger bi bi-exclamation-triangle">
+                Email je obavezan!
+                </span>
+              <span
+                *ngIf="dodavanjeRadnika.get('email')?.hasError('pattern') && dodavanjeRadnika.get('email')?.touched"
+                class="text-danger bi bi-exclamation-triangle">
+                Neispravna email adresa!
+                </span>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-group mb-3" *ngIf="drzava!=null">
+                <label class="small mb-1" for="drzava">Država:</label>
+                <select id="drzava" class="form-control" formControlName="drzava">
+                  <option [value]="drzava.id" *ngFor="let drzava of drzava">
+                    {{drzava.naziv}}
+                  </option>
+                </select>
+              </div>
+              <span
+                *ngIf="dodavanjeRadnika.get('drzava')?.hasError('required') && dodavanjeRadnika.get('drzava')?.touched"
+                class="text-danger bi bi-exclamation-triangle">
+                Odabir države je obavezan!
+                </span>
+            </div>
+
+
+            <div class="row gx-3 mb-3">
+
+              <div class="form-group col-md-6">
+                <label class="small mb-1" for="datumRodjenja">Datum rođenja:</label>
+                <input type="date" class="form-control" id="datumRodjenja" placeholder="datumRodjenja"
+                       formControlName="datumRodjenja">
+                <span
+                  *ngIf="dodavanjeRadnika.get('datumRodjenja')?.hasError('required') && dodavanjeRadnika.get('datumRodjenja')?.touched"
+                  class="text-danger bi bi-exclamation-triangle">
+                Datum rođenja je obavezan!
+                </span>
+                <span *ngIf="dodavanjeRadnika.get('datumRodjenja')?.hasError('maxDate')"
+                      class="text-danger bi bi-exclamation-triangle">
+                    Datum rođenja ne može biti noviji od trenutnog datuma!
+                  </span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger" style="float: right;">
+              Dodaj radnika
+            </button>
+
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-8 mx-auto" *ngIf="prikaz.editovanjeProfila" style="width: 100%">
+      <div class="card mb-4">
+        <div class="card-header">Editovanje profila</div>
+
+        <div *ngFor="let profil of profili" class="mb-3">
+          <div class="card">
+            <div class="card-body d-flex align-items-center">
+
+
+              <img src="{{MojConfig.server_adresa}}/KorisnickiNalog/Slika?id={{profil.id}}" class="mr-3"
+                   style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid red;"/>
+
+
+              <div style="margin-left: 20px;">
+                <h3 class="card-title mb-1">Korisnicko ime: {{ profil.korisnickoIme }}</h3>
+                <p class="card-text mb-0" *ngIf="profil.isAdmin">Uloga: Administrator</p>
+                <p class="card-text mb-0" *ngIf="profil.isKupac">Uloga: Kupac</p>
+                <p class="card-text mb-0" *ngIf="profil.isRadnik">Uloga: Radnik</p>
+              </div>
+
+              <div class="ml-auto d-flex flex-column" style="margin-left: 60%;">
+                <button class="btn btn-danger mb-2" (click)="openEditDialog(profil)">Uredi ulogu</button>
+                <button class="btn btn-danger" (click)="obrisiProfil(profil.id)">Deaktiviraj profil</button>
+              </div>
+
+              <!-- Dodajemo dijalog za uređivanje uloge -->
+              <div class="dialog-container" *ngIf="showEditDialog && selectedUser && selectedUser.id===profil.id">
+                <div class="zatvori" (click)="closeDialog()">X</div>
+                <div style="margin-bottom: 20px;"></div>
+                <h2 class="text-center">Uređivanje uloge korisnika {{ selectedUser?.korisnickoIme }}</h2>
+                <p class="text-center">Molimo odaberite željenu ulogu:</p>
+                <form>
+                  <div class="row justify-content-center">
+                    <div class="col-3 text-center">
+                      <button class="btn btn-primary btn-block mb-3" (click)="prebaciUAdmin(profil.id)">Admin</button>
+                    </div>
+                    <div class="col-3 text-center">
+                      <button class="btn btn-primary btn-block mb-3 mx-auto" (click)="prebaciURadnika(profil.id)">Radnik</button>
+                    </div>
+                    <div class="col-3 text-center">
+                      <button class="btn btn-primary btn-block mb-3" (click)="prebaciUKupca(profil.id)">Kupac</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xl-8 mx-auto" *ngIf="prikaz.upravljanjeKorisnickimNalozima" style="width: 100%">
+      <div class="card mb-4">
+        <div class="card-header">Dodavanje zadataka</div>
+        <div class="card-body">
+          <form [formGroup]="zadaciForm" (ngSubmit)="Dodaj()">
+
+            <div class="mb-3 form-group">
+              <label class="small mb-1" for="naziv">Naziv:</label>
+              <input type="text" class="form-control" id="naziv" placeholder="Naziv" formControlName="naziv"
+                     [(ngModel)]="zadaciRequest.naziv">
+              <span
+                *ngIf="zadaciForm.get('naziv')?.hasError('required') && zadaciForm.get('naziv')?.touched"
+                class="text-danger bi bi-exclamation-triangle">
+                Naziv zadatka je obavezno polje!
+                </span>
+            </div>
+
+            <div class="mb-3 form-group">
+              <label class="small mb-1" for="opis">Opis:</label>
+              <input type="text" class="form-control" id="opis" placeholder="Opis" formControlName="opis"
+                     [(ngModel)]="zadaciRequest.opis">
+              <span
+                *ngIf="zadaciForm.get('opis')?.hasError('required') && zadaciForm.get('opis')?.touched"
+                class="text-danger bi bi-exclamation-triangle">
+                Opis zadatka je obavezno polje!
+                </span>
+            </div>
+
+            <div class="row gx-3 mb-3">
+              <div class="form-group col-md-6">
+                <div class="mb-3 form-group">
+                  <label class="small mb-1" for="datumPocetka">Datum pocetka:</label>
+                  <input type="date" class="form-control" id="datumPocetka" placeholder="Datum pocetka"
+                         formControlName="datumPocetka" [(ngModel)]="zadaciRequest.datumPocetka">
+                  <span
+                    *ngIf="zadaciForm.get('datumPocetka')?.hasError('required') && zadaciForm.get('datumPocetka')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">
+                Datum početka zadatka je obavezno polje!
+                </span>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="mb-3 form-group">
+                  <label class="small mb-1" for="datumZavrsetka">Datum zavrsetka:</label>
+                  <input type="date" class="form-control" id="datumZavrsetka" placeholder="Datum zavrsetka"
+                         formControlName="datumZavrsetka" [(ngModel)]="zadaciRequest.datumZavrsetka">
+                  <span
+                    *ngIf="zadaciForm.get('datumZavrsetka')?.hasError('required') && zadaciForm.get('datumZavrsetka')?.touched"
+                    class="text-danger bi bi-exclamation-triangle">
+                Datum završetka zadatka je obavezno polje!
+                </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 form-group">
+              <label class="small mb-1" for="radnikId">Radnik:</label>
+              <select class="form-control" id="radnikId" name="radnikId" formControlName="radnikId"
+                      [(ngModel)]="zadaciRequest.radnikId">
+                <option *ngFor="let rad of radnik" [ngValue]="rad.id">{{ rad.korisnickoIme }}</option>
+              </select>
+            </div>
+            <span
+              *ngIf="zadaciForm.get('radnikId')?.hasError('required') && zadaciForm.get('radnikId')?.touched"
+              class="text-danger bi bi-exclamation-triangle">
+                Odabir radnika je obavezan!
+                </span>
+            <button type="submit" class="btn btn-danger" style="float: right;">
+              Dodaj
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xl-8 mx-auto" *ngIf="prikaz.aktivniZadaci" style="width: 100%">
+      <div class="card mb-4">
+        <div class="card-header">Aktivni zadaci</div>
+        <section *ngIf="myAuth.isLogiran() && myAuth.isAdmin()">
+          <div class="container py-5">
+            <div *ngIf="zadaci.length <= 0" class="text-center" style="color:rgb(220, 53, 69);">
+              <p>Trenutno nema aktivnih zadataka!</p>
+            </div>
+            <div *ngFor="let zadatak of zadaci" class="row justify-content-center mb-3">
+              <div class="col-md-12 col-xl-10">
+                <div class="card shadow-0 border rounded-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                        <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                          <img
+                            src="./assets/task.jpg"
+                            class="w-50"/>
+                          <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="d-flex flex-row">
+                          <div class="text-danger mb-1 me-2">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                          </div>
+                          <label>{{ zadatak.naziv }}</label>
+                        </div>
+                        <div class="mt-1 mb-0 text-muted small">
+                          <label>Opis: {{ zadatak.opis }}</label>
+                        </div>
+                        <div class="mt-1 mb-0 text-muted small">
+                          <label>Datum dodavanja: {{ zadatak.datumDodavanja | date: 'dd.MM.yyyy.' }}</label>
+                        </div>
+                        <div class="mt-1 mb-0 text-muted small">
+                          <label>Datum završetka: {{ zadatak.datumZavrsetka | date: 'dd.MM.yyyy.' }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                        <div class="d-flex flex-row align-items-center mb-1">
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+
+
+    <div class="col-xl-8 mx-auto" *ngIf="prikaz.dodavanjeDokumenata" style="width: 100%">
+      <div class="card mb-4">
+        <div class="card-header">Dodavanje dokumenta</div>
+        <section *ngIf="myAuth.isLogiran() && myAuth.isAdmin()">
+          <div class="container py-5">
+
+            <div class="row justify-content-center mb-3">
+              <div class="col-md-12 col-xl-10">
+                <div class="card shadow-0 border rounded-3">
+                  <div class="card-body">
+                    <div class="row">
+
+                      <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="d-flex flex-row">
+                          <div class="text-danger mb-1 me-2">
+                            <i class="fa fa-star">Molimo da odaberete file u PDF formatu!</i>
+                          </div>
+                        </div>
+                        <span>
+                    <input class="form-control" id="upload" type="file" (change)="handleFileInput($event)"  [multiple]="false">
+                    <button class="btn btn-success"
+                            style="margin-left: 5px; margin-top:5px;" (click)="sendData()">Dodaj</button>
+                  </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+  </div>
+</div>

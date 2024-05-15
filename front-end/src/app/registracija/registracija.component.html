@@ -1,0 +1,79 @@
+<body class="login-page">
+<main class="container mt-5">
+  <div class="login-block formContainer">
+    <h1 class="text-center">Registracija</h1>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="registrirajSe()">
+      <hr class="hr-xs">
+      <div class="form-floating my-3">
+        <input type="text" class="form-control" id="floatingUsername" name="korisnickoIme" placeholder="Korisničko ime"
+               formControlName="korisnickoIme" [(ngModel)]="registrationRequest.korisnickoIme">
+        <label for="floatingUsername">Korisničko ime</label>
+        <span *ngIf="registrationForm.get('korisnickoIme')?.hasError('required') && registrationForm.get('korisnickoIme')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Korisničko ime je obavezno.</span>
+        <span *ngIf="registrationForm.get('korisnickoIme')?.hasError('pattern') && registrationForm.get('korisnickoIme')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Korisničko ime mora početi slovom i sadržavati samo slova, brojeve i donje crte.</span>
+      </div>
+
+      <div class="form-floating my-3">
+        <input type="text" class="form-control" id="floatingName" name="ime" placeholder="Ime" formControlName="ime"
+               [(ngModel)]="registrationRequest.ime">
+        <label for="floatingName">Ime</label>
+        <span *ngIf="registrationForm.get('ime')?.hasError('required') && registrationForm.get('ime')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Ime je obavezno.</span>
+        <span *ngIf="registrationForm.get('ime')?.hasError('pattern') && registrationForm.get('ime')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Ime mora početi velikim slovom i sadržavati samo slova.</span>
+      </div>
+      <div class="form-floating my-3">
+        <input type="text" class="form-control" id="floatingLastName" name="prezime" placeholder="Prezime"
+               formControlName="prezime" [(ngModel)]="registrationRequest.prezime">
+        <label for="floatingLastName">Prezime</label>
+        <span *ngIf="registrationForm.get('prezime')?.hasError('required') && registrationForm.get('prezime')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Prezime je obavezno.</span>
+        <span *ngIf="registrationForm.get('prezime')?.hasError('pattern') && registrationForm.get('prezime')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Prezime mora početi velikim slovom i sadržavati samo slova.</span>
+      </div>
+      <div class="form-floating my-3">
+        <input type="text" class="form-control" id="floatingEmail" name="email" placeholder="Email"
+               formControlName="email" [(ngModel)]="registrationRequest.email">
+        <label for="floatingEmail">Email</label>
+        <span *ngIf="registrationForm.get('email')?.hasError('required') && registrationForm.get('email')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Email je obavezan.</span>
+        <span *ngIf="registrationForm.get('email')?.hasError('pattern') && registrationForm.get('email')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Unesite ispravan email format.</span>
+      </div>
+      <div class="form-floating my-3">
+        <input type="password" class="form-control" id="floatingPassword" name="lozinka" placeholder="Lozinka"
+               formControlName="lozinka" [(ngModel)]="registrationRequest.lozinka">
+        <label for="floatingPassword">Lozinka</label>
+        <span *ngIf="registrationForm.get('lozinka')?.hasError('required') && registrationForm.get('lozinka')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Lozinka je obavezna.</span>
+      </div>
+      <div class="form-floating my-3">
+        <select class="form-control" id="drzavaSelect" name="drzava" formControlName="drzava"
+                [(ngModel)]="registrationRequest.drzava">
+          <option *ngFor="let drz of drzava" [ngValue]="drz.id">{{ drz.naziv }}</option>
+        </select>
+        <label for="drzavaSelect">Država</label>
+        <span *ngIf="registrationForm.get('drzava')?.hasError('required') && registrationForm.get('drzava')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Država je obavezna.</span>
+      </div>
+      <div class="form-floating my-3">
+        <input type="date" class="form-control" id="datumRodjenjaPicker" name="datumRodjenja"
+               placeholder="Datum rođenja" formControlName="datumRodjenja"
+               [(ngModel)]="registrationRequest.datumRodjenja">
+        <label for="datumRodjenjaPicker">Datum rođenja</label>
+        <span *ngIf="registrationForm.get('datumRodjenja')?.hasError('required') && registrationForm.get('datumRodjenja')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Datum rođenja je obavezan.</span>
+        <span *ngIf="registrationForm.get('datumRodjenja')?.hasError('datumValidator') && registrationForm.get('datumRodjenja')?.touched"
+              class="text-danger bi bi-exclamation-triangle float-start">Unesite ispravan datum rođenja.</span>
+      </div>
+      <br>
+      <div id="btnHolder" class="text-center">
+        <button class="btn btn-danger mt-3 w-50" type="submit">Registriraj se</button>
+      </div>
+      <br>
+    </form>
+  </div>
+</main>
+</body>

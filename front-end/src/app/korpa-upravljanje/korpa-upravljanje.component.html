@@ -1,0 +1,93 @@
+
+<section class="col-xl-8 mx-auto" style="margin-top:50px;">
+      <h1 class="text-center">Vaša korpa</h1>
+      <div class="row justify-content-center mb-3" *ngFor="let item of korpa">
+        <div class="col-md-12 col-xl-10">
+          <div class="card shadow-0 border rounded-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                  <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                    <img src="{{MojConfig.server_adresa}}/ArtikalSlikaPreview/Slika?id={{item.artikalID}}" class="w-100"/>
+                    <a href="#!">
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                  <div class="d-flex flex-row">
+                    <div class="text-danger mb-1 me-2">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <span>{{item.imeArtikla}}</span>
+                  </div>
+                  <div class="mt-1 mb-0 text-muted small">
+                    <span>{{ item.opis }}</span>
+                  </div>
+                  <span></span>
+                </div>
+                <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <h4 class="mb-1 me-1">{{item.cijena}} KM</h4>
+                  </div>
+                  <div class="d-flex flex-row align-items-center mb-1">
+                    <h4 class="mb-1 me-1">Datum dodavanja u korpu: {{ item.datumDodavanja | date: 'dd.MM.yyyy.' }}</h4>
+                  </div>
+                  <div class="d-flex flex-column mt-4">
+                    <button type="button" class="btn btn-danger flex-fill ms-1 mb-1" (click)="obrisiIzKorpe(item.artikalID)" data-mdb-ripple-color="dark">Ukloni
+                    iz korpe</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+
+
+
+<button type="button" class="btn btn-danger mt-4 d-block mx-auto mb-4" (click)="otvoriNarudzbu()">Naruči</button>
+
+<div *ngIf="narudzbaAktivna" class="narudzba-div"  style="border-radius: 15px">
+  <div class="zatvori" (click)="zatvoriNarudzbu()">X</div>
+
+  <div class="form-item">
+    <input type="text" id="ime" [(ngModel)]="ime" placeholder="Ime" required>
+  </div>
+
+  <div class="form-item">
+    <input type="text" id="prezime" [(ngModel)]="prezime" placeholder="Prezime" required>
+  </div>
+
+  <div class="form-item">
+    <input type="text" id="adresa" [(ngModel)]="adresa" placeholder="Adresa" required>
+  </div>
+
+  <div class="form-item">
+    <input type="tel" id="brojTelefona" [(ngModel)]="brojTelefona" placeholder="Broj telefona" required>
+  </div>
+
+  <div class="form-item">
+    <label for="dostavljac">Odabir dostavljača:</label>
+    <select id="dostavljac" [(ngModel)]="odabraniDostavljac" required>
+      <option *ngFor="let dost of dostavljac" [value]="dost.id">
+        {{ dost.naziv }}
+      </option>
+    </select>
+  </div>
+
+
+  <div class="form-item">
+    <label for="ukupnaCijena">Ukupna cijena:</label>
+    <input type="text" id="ukupnaCijena" [(ngModel)]="ukupnaCijena" readonly placeholder="Ukupna cijena">
+  </div>
+
+  <button type="button" class="btn btn-success mt-2" (click)="provjeriUnosIPotvrdi()">Potvrdi narudžbu</button>
+</div>

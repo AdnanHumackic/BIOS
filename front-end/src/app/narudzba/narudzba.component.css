@@ -1,0 +1,15 @@
+
+
+.red-pagination .page-item.active .page-link,
+.red-pagination .page-item:not(.disabled) .page-link:hover,
+.red-pagination .page-item:not(.disabled) .page-link:focus {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}
+
+.red-pagination .page-item.active .page-link {
+  background-color: rgb(220, 53, 69);
+  border-color:  rgb(220, 53, 69);
+  color: #fff;
+}

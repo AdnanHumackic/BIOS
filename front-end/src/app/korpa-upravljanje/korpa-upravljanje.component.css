@@ -1,0 +1,106 @@
+.korpa-item {
+  display: flex;
+  border: 1px solid red;
+  margin: 10px;
+  padding: 10px;
+}
+
+.korpa-item img {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-ime {
+  font-weight: bold;
+}
+
+.item-cijena {
+  color: green;
+}
+.container {
+  text-align: center;
+}
+
+.narudzba-forma {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-item {
+  margin-bottom: 15px;
+}
+
+.narudzba-forma input,
+.narudzba-forma select {
+  width: calc(50% - 8px);
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.narudzba-forma button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.narudzba-forma button:hover {
+  background-color: #45a049;
+}
+
+.narudzba-div {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid rgba(178, 17, 17, 0.71);
+  z-index: 1000;
+  width: 70%;
+  max-width: 400px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .narudzba-forma {
+    flex-direction: column;
+  }
+}
+.narudzba-forma input,
+.narudzba-forma select {
+  width: 100%;
+}
+.narudzba-div {
+  width: 90%;
+}
+.zatvori {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
+}
+
+.narudzba-forma label {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,18 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-text {
+  color: red;
+  text-align: center;
+  font-size:xxx-large;
+  font-weight: bolder;
+}
+
+.image-container {
+  text-align: center;
+  margin-top:-50px;
+}
