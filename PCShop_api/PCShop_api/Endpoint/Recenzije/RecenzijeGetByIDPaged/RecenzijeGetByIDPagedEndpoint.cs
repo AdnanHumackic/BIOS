@@ -31,7 +31,7 @@ namespace PCShop_api.Endpoint.Recenzije.RecenzijeGetByIDPaged
             var dataOfOnePage = PagedList<RecenzijeGetByIDPagedResponseRecenzije>.Create(recenzija, request.PageNumber, request.PageSize);
             return new RecenzijeGetByIDPagedResponse
             {
-                Recenzije = dataOfOnePage
+                Recenzije = dataOfOnePage,
             };
         }
     }

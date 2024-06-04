@@ -11,6 +11,7 @@
         public int KompatibilnostID { get; set; }
 
         public string Artikal2Ime { get; set; }
+        public int Cijena { get; set; }
 
     }
 }

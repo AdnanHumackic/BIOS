@@ -8,7 +8,7 @@ import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/rou
 import {ArtikalPretragaResponseArtikal} from "../pregled-artikala/artikli-pretraga-response";
 import {KompatibilnostGetByIdResponseKompatibilnost, KompGetByIDResponse} from "./kompatibilnost-get-by-id";
 import {DialogServiceService} from "../shared-services/dialog-service.service";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig, MatDialogContent} from "@angular/material/dialog";
 import {KompatibilnostDetaljiComponent} from "../kompatibilnost-detalji/kompatibilnost-detalji.component";
 import {SlikeResponse} from "./get-slike";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
@@ -29,7 +29,7 @@ export interface Recenzija {
 @Component({
   selector: 'app-pregled-detalja',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule, ReactiveFormsModule, MatDialogContent],
   templateUrl: './pregled-detalja.component.html',
   styleUrl: './pregled-detalja.component.css',
 })
@@ -69,7 +69,6 @@ export class PregledDetaljaComponent implements OnInit {
     // @ts-ignore
     let id = this.decrypt(this.route.snapshot.paramMap.get('id'));
 
-
     let url = MojConfig.server_adresa + `/Artikal-GetByID?ID=${id}`;
     this.httpClient.get<ArtikalGetByID>(url).subscribe((x: ArtikalGetByID) => {
       this.artikalGetByID = x;
@@ -97,6 +96,7 @@ export class PregledDetaljaComponent implements OnInit {
   });
 
 
+  brojRecenzija!:number;
   private loadRecenzijePaged(pageNumber: number) {
     const zadPoStranici = 3;
     const urlRec2 = MojConfig.server_adresa+`/Recenzija-GetByIDPaged?PageSize=${zadPoStranici}&PageNumber=${pageNumber}&ID=${this.artikalGetByID.id}`;
@@ -105,7 +105,7 @@ export class PregledDetaljaComponent implements OnInit {
       this.rec=x.recenzije.dataItems;
       this.trenutnaStranica=x.recenzije.currentPage;
       this.ukupnoStranica=x.recenzije.totalPages;
-
+      this.brojRecenzija=x.recenzije.totalCount;
       this.provjeriDaLiJePrazna();
     });
   }
@@ -227,4 +227,21 @@ export class PregledDetaljaComponent implements OnInit {
 
   }
 
+    currentIndex1: number = 0;
+    itemsPerPage: number = 4;
+    next() {
+        if (this.currentIndex1 + this.itemsPerPage < this.kompatibilnostGetById.length) {
+            this.currentIndex1 += this.itemsPerPage;
+        }
+    }
+
+    prev() {
+        if (this.currentIndex1 - this.itemsPerPage >= 0) {
+            this.currentIndex1 -= this.itemsPerPage;
+        }
+    }
+
+    getVisibleItems() {
+        return this.kompatibilnostGetById.slice(this.currentIndex1, this.currentIndex1 + this.itemsPerPage);
+    }
 }

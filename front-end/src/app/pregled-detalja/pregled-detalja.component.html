@@ -1,143 +1,172 @@
-<!doctype html>
+<mat-dialog-content>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
+<header>
 
-<div id="details" *ngIf="artikalGetByID" (load)="dohvati(artikalGetByID.id)">
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-10 mb-4">
-        <div class="card text-black" style="width: 100%;">
-          <div class="row no-gutters">
-            <div class="col-md-6 order-md-1">
-              <div class="image-container" style="margin-top: 120px; margin-left:30px">
-                <div *ngIf="slike && slike.length > 0">
-                  <div id="carouselExample" class="carousel slide carousel-fade" data-ride="carousel">
-                    <div class="carousel-inner">
-                      <div *ngFor="let slika of slike; let i = index" class="carousel-item"
-                           [class.active]="i === currentIndex">
-                        <img [src]="slika" [alt]="slika" class="d-block w-100">
-                      </div>
-                    </div>
 
-                    <a class="carousel-control-prev" (click)="prevSlide()" role="button" data-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"
-                            style="background-color: rgb(196, 195, 201); border-radius: 10px;"></span>
-                    </a>
-                    <a class="carousel-control-next" (click)="nextSlide()" role="button" data-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"
-                            style="background-color: rgb(196, 195, 201); border-radius: 10px;"></span>
-                    </a>
-                  </div>
-                </div>
+  <div class="bg-light py-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 text-danger" *ngIf="artikalGetByID" (load)="dohvati(artikalGetByID.id)">
+          <li class="breadcrumb-item"><a>Pregled Komponenti</a></li>
+          <li class="breadcrumb-item"><a>{{artikalGetByID.naziv}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detalji artikla</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
 
-                <div *ngIf="slike.length==0">
-                  <img src="{{MojConfig.server_adresa}}/ArtikalSlikaPreview/Slika?id={{artikalGetByID.id}}">
-                </div>
-
-              </div>
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div id="carouselExample1" class="carousel slide carousel-fade" data-ride="carousel">
+          <div class="carousel-inner">
+            <div *ngFor="let slika of slike; let i = index" class="carousel-item" [class.active]="i === currentIndex">
+              <img class="d-block w-100" [src]="slika" [alt]="slika">
             </div>
-            <div class="col-md-6 order-md-2">
-              <div class="card-body">
-                <div class="text-center mt-1">
-                  <h4 class="text-description"><b>Naziv: </b>{{artikalGetByID.naziv}}</h4>
-                  <h1 class="text-description"><b>Cijena: </b>{{artikalGetByID.cijena}} KM</h1>
-                  <h1 class="text-description"><b>Proizvođač: </b>{{artikalGetByID.proizvodjac}}</h1>
-                </div>
-                <div class="text-description"
-                     style="width: 100%; height: 400px; overflow-y: auto; white-space: pre-wrap;">
-                  <h1><b>Opis: </b></h1>
-                  <p>{{artikalGetByID.opis}}</p>
-                </div>
-                <div class="container-buttons">
-                  <button type="button" class="btn btn-danger" data-bs-toggle="collapse"
-                          data-bs-target="#kompatibilniEl"
-                          style="margin-right: 10px;" (click)="provjeri()">Prikaži kompatibilne elemente
-                  </button>
-                  <button type="button" class="btn btn-danger" style="margin-right: 10px;" (click)="prikaziRecenzije()">
-                    Pregled recenzija
-                  </button>
-                </div>
+          </div>
+          <a class="carousel-control-prev" (click)="prevSlide()" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"
+                  style="background-color: rgb(196, 195, 201); border-radius: 10px;"></span>
+          </a>
+          <a class="carousel-control-next" (click)="nextSlide()" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"
+                  style="background-color: rgb(196, 195, 201); border-radius: 10px;"></span>
+          </a>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div *ngFor="let slika of slike; let i = index"
+               [class.active]="i === currentIndex">
+            <img [src]="slika" [alt]="slika" class="img-thumbnail mr-2">
+          </div>
+        </div>
+      </div>
+      <!-- Product Info -->
+      <div class="col-lg-6" *ngIf="artikalGetByID" (load)="dohvati(artikalGetByID.id)">
+        <h1 class="h2">{{artikalGetByID.naziv}}</h1>
+        <p class="text-muted">{{artikalGetByID.proizvodjac}}</p>
+        <div class="rating mb-3">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="bi bi-text-center"></i>
+          <span class="ml-2">({{brojRecenzija}} recenzija)</span>
+        </div>
+        <h4 class="text-danger">{{artikalGetByID.cijena}} KM</h4>
+        <p class="mt-3 text-description"
+           style="width: 100%; height: 400px; overflow-y: auto; white-space: pre-wrap;">{{artikalGetByID.opis}}</p>
 
-                <div class="collapse" id="kompatibilniEl">
-                  <div class="card card-body" id="kompEl" *ngFor="let komp of kompatibilnostGetById">
-                    <a (click)="otvoriDetalje(komp.id)">{{komp.artikal2Ime}}</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-                  </div>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="h3 mb-4 text-center">Kompatibilni elementi</h2>
+    <ng-container *ngIf="kompatibilnostGetById">
+      <div class="d-flex justify-content-center position-relative" *ngIf="kompatibilnostGetById.length > 0">
+        <div class="col-1 d-flex align-items-center justify-content-center">
+          <a class="carousel-control-prev" role="button" (click)="prev()" *ngIf="kompatibilnostGetById.length !== 0">
+            <span class="carousel-control-prev-icon" aria-hidden="true"
+                  style="background-color: rgb(196, 195, 201); border-radius: 10px;"></span>
+          </a>
+        </div>
+        <div class="w-75">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let komp of getVisibleItems()">
+              <div class="card fixed-size-card">
+                <img class="card-img-top fixed-size-img"
+                     [src]="MojConfig.server_adresa + '/ArtikalSlikaPreview/Slika?id=' + komp.id" alt="Related Product">
+                <div class="card-body">
+                  <h5 class="card-title">{{komp.artikal2Ime}}</h5>
+                  <p class="card-text text-danger">{{komp.cijena}} KM</p>
+                  <a  class="btn btn-outline-danger" (click)="otvoriDetalje(komp.id)">Detalji</a>
                 </div>
-
-
               </div>
             </div>
           </div>
         </div>
+        <div class="col-1 d-flex align-items-center justify-content-center" *ngIf="kompatibilnostGetById.length != 0">
+          <a class="carousel-control-next" role="button" (click)="next()">
+            <span class="carousel-control-next-icon" aria-hidden="true"
+                  style="background-color: rgb(196, 195, 201); border-radius: 10px;"></span>
+          </a>
+        </div>
       </div>
+    </ng-container>
+    <div class="text-center" *ngIf="!kompatibilnostGetById || kompatibilnostGetById.length === 0" style="color: red;">
+      Artikal nema kompatibilnih elemenata
     </div>
   </div>
-</div>
+</section>
+
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="h3 mb-4 text-center">Recenzije</h2>
+
+  <form [formGroup]="recenzijaForm" (ngSubmit)="snimiRecenziju()" style="width:65%; margin: 0 auto;" *ngIf="MyAuth.isLogiran()">
+    <div class="form-group d-flex justify-content-center">
+      <textarea formControlName="sadrzaj" class="form-control" id="sadrzaj1" required
+                style="height: 100px;"></textarea>
+
+    </div>
+    <span
+      *ngIf="recenzijaForm.controls['sadrzaj'].invalid && (recenzijaForm.controls['sadrzaj'].dirty || recenzijaForm.controls['sadrzaj'].touched)"
+      class="text-danger bi bi-exclamation-triangle">
+        Molimo unesite sadržaj recenzije.
+      </span>
+    <button type="submit" class="btn btn-outline-danger" [disabled]="recenzijaForm.invalid || snimanjeRecenzije" style="width:20%; margin-bottom: 15px;margin-top:15px; float:right;">
+      <span *ngIf="!snimanjeRecenzije">+</span>
+      <span *ngIf="snimanjeRecenzije">Dodavanje...</span>
+    </button>
+  </form>
+<div style="margin:80px;"></div>
+  <div *ngFor="let recenzija of rec"
+       style="margin-bottom: 15px; border:1px solid rgba(128, 128, 128, 0.49); padding: 15px; width: 65%; margin: 0 auto;margin-top:60px;border-radius:10px; background-color: #f5f5f5;">
+    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;">
+      <h4 style="color:grey;">Napisao: {{ recenzija.korisnickoIme }}</h4>
+      <h4 style="color: grey;">Datum pisanja: {{ recenzija.datumDodavanja | date:'dd.MM.yyyy' }}</h4>
+    </div>
+    <p style="padding-top: 5px;">{{ recenzija.sadrzaj }}</p>
+  </div>
+
+  <div *ngIf="ukupnoStranica > 1" class="text-center mt-3 mb-3 red-pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mx-auto">
+        <li class="page-item" [class.disabled]="trenutnaStranica === 1">
+          <button class="page-link" (click)="goToPage(trenutnaStranica - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        <li class="page-item" *ngFor="let page of nizStranica()" [class.active]="page === trenutnaStranica">
+          <button class="page-link" (click)="goToPage(page)">
+            {{ page }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="trenutnaStranica === ukupnoStranica">
+          <button class="page-link" (click)="goToPage(trenutnaStranica + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  </div>
+</section>
 
 
 </body>
 </html>
-
-<div class="container-recenzija" style="width: 700px; margin-top: -20px; margin: 0 auto;">
-  <form [formGroup]="recenzijaForm" (ngSubmit)="snimiRecenziju()" style="width:100%" *ngIf="MyAuth.isLogiran()">
-    <div class="form-group">
-      <label for="sadrzaj" style="margin-bottom: 15px;">Recenzija:</label>
-      <textarea formControlName="sadrzaj" class="form-control" id="sadrzaj" required style="height: 100px;"></textarea>
-      <div
-        *ngIf="recenzijaForm.controls['sadrzaj'].invalid && (recenzijaForm.controls['sadrzaj'].dirty || recenzijaForm.controls['sadrzaj'].touched)"
-        class="text-danger bi bi-exclamation-triangle">
-        Molimo unesite sadržaj recenzije.
-      </div>
-    </div>
-    <button type="submit" class="btn btn-danger" [disabled]="recenzijaForm.invalid || snimanjeRecenzije"
-            style="width:30%; margin-bottom: 15px;margin-top:15px; float:right;">
-      <span *ngIf="!snimanjeRecenzije">Spasi recenziju</span>
-      <span *ngIf="snimanjeRecenzije">Snimanje...</span>
-    </button>
-  </form>
-
-  <div class="recenzije" *ngIf="prikazi" style="width: 100%; margin-top:90px;">
-    <div *ngFor="let recenzija of rec"
-         style="margin-bottom: 15px; border:1px solid rgb(220, 53, 69); padding: 5px; border-radius:10px;">
-      <div id="sivo">
-        <h4>Korisničko ime: {{ recenzija.korisnickoIme }}</h4>
-        <h4>Datum dodavanja: {{ recenzija.datumDodavanja | date:'dd.MM.yyyy' }}</h4>
-      </div>
-      <p>Sadržaj: {{ recenzija.sadrzaj }}</p>
-    </div>
-
-    <div *ngIf="ukupnoStranica > 1" class="text-center mt-3 mb-3 red-pagination">
-      <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center mx-auto">
-          <li class="page-item" [class.disabled]="trenutnaStranica === 1">
-            <button class="page-link" (click)="goToPage(trenutnaStranica - 1)" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </button>
-          </li>
-          <li class="page-item" *ngFor="let page of nizStranica()" [class.active]="page === trenutnaStranica">
-            <button class="page-link" (click)="goToPage(page)">
-              {{ page }}
-            </button>
-          </li>
-          <li class="page-item" [class.disabled]="trenutnaStranica === ukupnoStranica">
-            <button class="page-link" (click)="goToPage(trenutnaStranica + 1)" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
-  </div>
-</div>
-
-
+</mat-dialog-content>

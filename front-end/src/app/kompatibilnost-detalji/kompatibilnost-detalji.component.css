@@ -1,0 +1,12 @@
+.mat-dialog-content-wide {
+  width: 100%;
+}
+
+.wide-dialog-content {
+  max-width: 100%;
+}/*popravi visinu angular dialoga*/
+.mat-mdc-dialog-content {
+  max-height: calc(100vh - 90px);
+
+}
+

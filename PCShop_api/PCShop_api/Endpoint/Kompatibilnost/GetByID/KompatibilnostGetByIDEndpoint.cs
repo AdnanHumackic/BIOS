@@ -23,7 +23,8 @@ namespace PCShop_api.Endpoint.Kompatibilnost.GetByID
             {
                 ID = x.Artikal2.ID,
                 Artikal2Ime = x.Artikal2.ImeArtikla,
-                KompatibilnostID = x.ArtikalKompatibilnostID
+                KompatibilnostID = x.ArtikalKompatibilnostID,
+                Cijena=x.Artikal2.Cijena
             }).ToListAsync(cancellationToken);
 
             return new KompatibilnostGetByIDResponse
