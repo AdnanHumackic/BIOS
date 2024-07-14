@@ -26,7 +26,7 @@ export const routes: Routes = [
   {path: 'upravljanjeArtiklima', component: UpravljanjeArtiklimaComponent, canActivate:[AutorizacijaGuardRadnik]},
   {path: 'wishlist', component:WishlistUpravljanjeComponent, canActivate:[AutorizacijaGuardKupac]},
   {path: 'korpa', component:KorpaUpravljanjeComponent, canActivate:[AutorizacijaGuardKupac]},
-  {path: 'oNama', component: ONamaComponent},
+  {path: 'homePage', component: ONamaComponent},
   {path: 'login', component: LoginComponent},
   {path: 'narudzba', component: NarudzbaComponent, canActivate:[AutorizacijaGuardKupac]},
   {path: 'registracija', component: RegistracijaComponent},
